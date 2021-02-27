@@ -1,7 +1,7 @@
-from simple_gan.models import build_discrimator
+from simple_gan.models import build_discriminator
 
 def main():
-    discriminator = build_discrimator(input_shape = (28, 28, 3))
+    discriminator = build_discriminator(input_shape = (28, 28, 3))
     print(discriminator.summary())
 
 

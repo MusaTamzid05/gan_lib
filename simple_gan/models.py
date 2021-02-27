@@ -8,7 +8,7 @@ from tensorflow.keras.layers import BatchNormalization
 
 
 
-def discription_size_fixer(model, input_shape, min_size = 28):
+def discriminator_size_fixer(model, input_shape, min_size = 28):
     # for lack of a better name.
     if input_shape[0] != input_shape[1]:
         raise RuntimeError("image width and height must be same")
@@ -24,11 +24,11 @@ def discription_size_fixer(model, input_shape, min_size = 28):
     return model, neuron
 
 
-def build_discrimator(input_shape, alpha = 0.2):
+def build_discriminator(input_shape, alpha = 0.2):
 
 
     model = Sequential()
-    model, neuron  = discription_size_fixer(model = model, input_shape = input_shape)
+    model, neuron  = discriminator_size_fixer(model = model, input_shape = input_shape)
     model.add(Conv2D(neuron, (5,5), padding = "same",
                      strides = (2,2), input_shape = input_shape))
     model.add(LeakyReLU(alpha = alpha))
