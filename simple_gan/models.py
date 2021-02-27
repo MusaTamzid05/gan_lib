@@ -8,6 +8,7 @@ from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Reshape
 from tensorflow.keras.layers import Conv2DTranspose
 
+from simple_gan.utils import is_valid_shape
 
 
 def discriminator_size_fixer(model, input_shape, min_size = 28):
@@ -60,6 +61,10 @@ def generator_size_fixer(model, input_shape):
 def build_generator(input_shape):
     if input_shape[0] != input_shape[1]:
         raise RuntimeError("input shape width and height must be same")
+
+    if is_valid_shape(width = input_shape[0]) == False:
+        raise RuntimeError("Not a valid shape!")
+
 
     middle_layer_shape = (7, 7, 64)
     model = Sequential()
