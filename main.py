@@ -1,11 +1,9 @@
-#from simple_gan.models import build_discriminator
-from simple_gan.models import build_generator
+from simple_gan.data_loader import DataLoader
+
 
 def main():
-    #discriminator = build_discriminator(input_shape = (28, 28, 3))
-    #print(discriminator.summary())
-    generator = build_generator(input_shape = (28, 28, 3))
-    generator.summary()
+
+    data_loader = DataLoader(image_dir = "/home/musa/data/images/cat_and_dogs/dogs-vs-cats/train")
 
 
 if __name__ == "__main__":
