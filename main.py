@@ -1,10 +1,10 @@
-from simple_gan.data_loader import DataLoader
+from simple_gan.trainer import Trainer
 
 
 def main():
 
-    data_loader = DataLoader(image_dir = "./data", image_width = 224)
-    data_loader.load()
+    trainer = Trainer(image_dir = "./data", image_width = 224)
+    trainer.train()
 
 
 
