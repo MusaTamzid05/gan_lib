@@ -75,7 +75,7 @@ def build_generator(input_shape):
 
     middle_layer_shape = (7, 7, 64)
     model = Sequential()
-    model.add(Dense(input_dim = 500, units = 512))
+    model.add(Dense(input_dim = 100, units = 512))
     model.add(Activation("relu"))
     model.add(BatchNormalization())
 
