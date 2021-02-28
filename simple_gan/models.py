@@ -9,6 +9,7 @@ from tensorflow.keras.layers import Reshape
 from tensorflow.keras.layers import Conv2DTranspose
 
 from simple_gan.utils import is_valid_shape
+from simple_gan.const import LAYER_WIDTH
 
 
 def discriminator_size_fixer(model, input_shape, min_size = 28):
@@ -29,6 +30,12 @@ def discriminator_size_fixer(model, input_shape, min_size = 28):
 
 def build_discriminator(input_shape, alpha = 0.2):
 
+    if input_shape[0] != input_shape[1]:
+        raise RuntimeError("input shape width and height must be same")
+
+
+    if is_valid_shape(width = input_shape[0]) == False:
+        raise RuntimeError("Not a valid shape!")
 
     model = Sequential()
     model, neuron  = discriminator_size_fixer(model = model, input_shape = input_shape)
@@ -47,7 +54,7 @@ def build_discriminator(input_shape, alpha = 0.2):
 
 
 def generator_size_fixer(model, input_shape):
-    current_width = 28
+    current_width = LAYER_WIDTH
     target_width = input_shape[0]
     while current_width < target_width:
         model.add(Conv2DTranspose(input_shape[2], (5, 5), strides= (2, 2), padding = "same"))
