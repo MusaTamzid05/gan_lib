@@ -1,4 +1,5 @@
 from simple_gan.trainer import Trainer
+from simple_gan.data_loader import DataLoader
 
 
 def main():

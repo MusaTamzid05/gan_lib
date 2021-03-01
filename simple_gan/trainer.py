@@ -1,10 +1,3 @@
-import tensorflow as tf
-
-physical_devices = tf.config.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
-
-
 from simple_gan.data_loader import DataLoader
 from simple_gan.models import build_discriminator
 from simple_gan.models import build_generator
@@ -32,7 +25,7 @@ class Trainer:
         discriminator.compile(loss = "binary_crossentrophy", optimizer = disc_opt)
         discriminator.trainable = False
         gan_input = Input(shape = (100,))
-        gan_output = discriminator(generator(gan_input))
+        gan_output = generator(gan_input)
 
         gan = Model(gan_input, gan_output)
         gan_opt = Adam(lr = lr, beta_1 = 0.5, decay = lr / epochs)
@@ -64,6 +57,7 @@ class Trainer:
                 noise = np.random.uniform(-1, 1, size = (batch_size, 100))
                 gan_image = gan.predict(noise, verbose = 0)
                 X = np.concatenate((image_batch, gan_image))
+                print(X)
 
 
 
