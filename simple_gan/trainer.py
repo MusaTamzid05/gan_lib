@@ -71,6 +71,9 @@ class Trainer:
         for epoch in range(0, epochs):
             batches_per_epoch = int(self.images.shape[0] / batch_size)
 
+            disc_losses = []
+            gen_losses = []
+
             for i in range(0, batches_per_epoch):
                 image_batch = self.images[i * batch_size : (i + 1) * batch_size]
                 noise = np.random.uniform(-1, 1, size = (batch_size, 100))
@@ -85,6 +88,7 @@ class Trainer:
 
                 # train the discriminator
                 disc_loss = discriminator.train_on_batch(X, y)
+                disc_losses.append(disc_loss)
 
                 # train the gan
 
@@ -92,8 +96,13 @@ class Trainer:
                 fake_labels = [1] * batch_size
                 fake_labels = np.reshape(fake_labels, (-1,))
                 gen_loss = gan.train_on_batch(noise, fake_labels)
+                gen_losses.append(gen_loss)
 
-                print(f" disc loss {disc_loss}, generator loss : {gen_loss}")
 
                 if i == batches_per_epoch - 1:
                     self.save_results(epoch = epoch, generator =  generator, benchmark_noise =  benchmark_noise)
+
+
+            print(f"epoch : {epoch + 1} disc loss {disc_loss / batches_per_epoch}, generator loss : {gen_loss / batches_per_epoch}")
+
+
